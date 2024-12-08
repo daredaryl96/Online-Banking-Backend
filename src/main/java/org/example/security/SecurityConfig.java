@@ -16,19 +16,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/customers/**").hasAnyRole("CUSTOMER", "ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
+//                .csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+//                .requestMatchers("/api/customers/**").hasAnyRole("CUSTOMER", "ADMIN")
+//                .anyRequest().authenticated()
+//                .and()
+//                .httpBasic();
+
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Allow all requests
+                .csrf().disable(); // Disable CSRF protection (not recommended for production)
 
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }
