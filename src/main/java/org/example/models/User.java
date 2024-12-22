@@ -65,17 +65,26 @@ public class User {
         return full_name;
     }
 
+    public void setFullName(String FullName) {
+        this.full_name = FullName;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String Username) {
+        this.username = Username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setFullName(String fullName) {
-        this.full_name = fullName;
+    public void setPassword(String Password) {
+        this.password = Password;
     }
+
 
     public String getEmail() {
         return email;
