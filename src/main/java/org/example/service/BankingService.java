@@ -57,4 +57,13 @@ public class BankingService {
     public List<Transaction> getTransactionHistory(Long accountId) {
         return transactionRepository.findByAccountId(accountId);
     }
+
+    public List<Transaction> getTransactionHistoryByAccountNumber(String accountNumber) {
+        Account account = accountRepository.findByAccountNumber(accountNumber);
+        if (account == null) {
+            throw new RuntimeException("Account not found with account number: " + accountNumber);
+        }
+        return transactionRepository.findByAccountId(account.getId());
+    }
+
 }

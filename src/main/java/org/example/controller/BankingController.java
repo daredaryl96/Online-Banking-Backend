@@ -53,9 +53,16 @@ public class BankingController {
     }
 
     // Get transaction history for an account
-    @GetMapping("/accounts/{accountId}/transactions")
-    public ResponseEntity<List<Transaction>> getTransactionHistory(@PathVariable Long accountId) {
-        List<Transaction> transactions = bankingService.getTransactionHistory(accountId);
+//    @GetMapping("/accounts/{accountId}/transactions")
+//    public ResponseEntity<List<Transaction>> getTransactionHistory(@PathVariable Long accountId) {
+//        List<Transaction> transactions = bankingService.getTransactionHistory(accountId);
+//        return ResponseEntity.ok(transactions);
+//    }
+
+    // Get transaction history for an account using account number
+    @GetMapping("/accounts/{accountNumber}/transactions")
+    public ResponseEntity<List<Transaction>> getTransactionHistory(@PathVariable String accountNumber) {
+        List<Transaction> transactions = bankingService.getTransactionHistoryByAccountNumber(accountNumber);
         return ResponseEntity.ok(transactions);
     }
 }
