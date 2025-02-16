@@ -37,6 +37,9 @@ public class User {
     @Column(name = "phonenumber", nullable = false) // Maps to PhoneNumber in the DB
     private String phoneNumber;
 
+    @Column(name = "Role", nullable = false) // Maps to PhoneNumber in the DB
+    private String role;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Account> accounts;
@@ -85,6 +88,9 @@ public class User {
         this.password = Password;
     }
 
+    public String getRole() {
+        return role;
+    }
 
     public String getEmail() {
         return email;
