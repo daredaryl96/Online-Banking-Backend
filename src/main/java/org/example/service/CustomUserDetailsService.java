@@ -28,4 +28,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .roles(user.getRole()) // Ensure the role is properly stored (e.g., "CUSTOMER" or "ADMIN")
                 .build();
     }
+
+
 }
