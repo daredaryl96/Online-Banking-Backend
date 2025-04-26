@@ -1,11 +1,14 @@
 package org.example.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.models.User;
 import org.example.service.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,12 +31,34 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    // Get a customer by ID
+    // Get a customer by ID - to further investigate
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id, HttpSession session) {
+        System.out.println("Received request to get user with ID: " + id);
+        System.out.println("Session ID: " + session.getId());  // Print session ID to ensure the session exists
+
+        // Use correct session attribute key
+        Long sessionId = (Long) session.getAttribute("id");
+        System.out.println("Session Attribute customerId: " + sessionId);  // Log the session attribute
+
+        // If session ID is null or doesn't match, do not return 403, proceed with the request
+        if (sessionId == null) {
+            System.out.println("Session ID is null, continuing request without session validation");
+        } else if (!sessionId.equals(id)) {
+            System.out.println("Session ID does not match requested ID, continuing request with mismatch");
+        }
+
+        // Proceed to fetch user regardless of session ID mismatch
         User user = userService.getUserById(id);
+        if (user == null) {
+            System.out.println("User not found with ID: " + id);
+            return ResponseEntity.status(404).body(null); // Not Found if user doesn't exist
+        }
+
+        System.out.println("User found: " + user);
         return ResponseEntity.ok(user);
     }
+
 
     // Create a new customer
     @PostMapping
