@@ -70,6 +70,10 @@ public class UserController {
         if (user.getPassword() == null || user.getPassword().isBlank()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
+
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("USER");
+        }
         User createdUser = userService.saveUser(user);
         return ResponseEntity.ok(createdUser);
     }

@@ -92,6 +92,10 @@ public class User {
         return role;
     }
 
+    public void setRole(String Role) {
+        this.role = Role;
+    }
+
     public String getEmail() {
         return email;
     }
