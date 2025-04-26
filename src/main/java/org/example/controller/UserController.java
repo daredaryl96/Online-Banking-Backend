@@ -88,9 +88,6 @@ public class UserController {
         }
 
         // Update fields
-        if (updatedUser.getUsername() != null) {
-            existingUser.setUsername(updatedUser.getUsername());
-        }
         if (updatedUser.getPassword() != null) {
             existingUser.setPassword(updatedUser.getPassword());
         }
