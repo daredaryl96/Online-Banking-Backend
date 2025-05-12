@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_container
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+
+  backend:
+    build: .
+    container_name: online-banking-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mssql
+    networks:
+      - app-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal:1433;databaseName=OnlineBanking;encrypt=false
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=P@ssw0rd
+
+  frontend:
+    build:
+      context: ../online-banking-frontend
+    container_name: online-banking-frontend
+    ports:
+      - "3000:80" # Maps React frontend to localhost:3000
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
