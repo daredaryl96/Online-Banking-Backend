@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   mssql:
@@ -11,6 +10,8 @@ services:
       - "1433:1433"
     networks:
       - app-network
+    volumes:
+          - mssql_data:/var/opt/mssql #to persist data
 
   backend:
     build: .
@@ -40,3 +41,6 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mssql_data:
