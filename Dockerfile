@@ -1,11 +1,21 @@
-# Use an official OpenJDK image that supports Java 23
+# Dockerfile.dev
+
+# Use an official OpenJDK image
 FROM eclipse-temurin:23-jdk
 
-# Set the working directory inside the container
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
+# Set the working directory
 WORKDIR /app
 
-# Copy the jar file into the container
-COPY target/OnlineBanking-1.0-SNAPSHOT.jar app.jar
+# Copy only the POM and install dependencies first (optional optimization)
+COPY pom.xml .
 
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Download Maven dependencies
+RUN mvn dependency:go-offline
+
+# By default, Dockerfile will not copy code. We will mount code as volume in docker-compose.
+
+# Start Spring Boot using spring-boot:run with DevTools support
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.fork=false"]
