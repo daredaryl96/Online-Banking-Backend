@@ -17,5 +17,8 @@ RUN mvn dependency:go-offline
 
 # By default, Dockerfile will not copy code. We will mount code as volume in docker-compose.
 
+# ✅ Copy your actual source code (For kubernetes)
+#COPY src ./src
+
 # Start Spring Boot using spring-boot:run with DevTools support
 CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.fork=false"]
